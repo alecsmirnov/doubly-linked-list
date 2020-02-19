@@ -103,20 +103,22 @@ void listDeleteNode(List* L, ListNode* node) {
 }
 
 void listClear(List* L) {
-	ListNode* iter = L->head;
+	if (!listIsEmpty(L)) {
+		ListNode* iter = L->head;
 
-	do {
-		ListNode* delete_node = iter;
+		do {
+			ListNode* delete_node = iter;
 
-		iter = iter->next;
+			iter = iter->next;
 
-		if (L->free_func)
-			L->free_func(iter->data);
+			if (L->free_func)
+				L->free_func(iter->data);
 
-		free(delete_node);
-	} while (iter);
+			free(delete_node);
+		} while (iter);
 
-	L->head = L->tail = NULL;
+		L->head = L->tail = NULL;
+	}
 }
 
 void listFree(List** L) {

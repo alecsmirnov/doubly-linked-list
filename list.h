@@ -4,8 +4,6 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-#define NO_FUNC NULL
-
 typedef void (*func_ptr)(void*);
 
 typedef struct ListNode {
