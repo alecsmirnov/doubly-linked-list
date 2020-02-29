@@ -23,7 +23,7 @@ typedef struct List {
 } List;
 
 static inline bool listIsEmpty(const List* L) {
-	return L->head == NULL;
+	return L->head == NULL || L->tail == NULL;
 }
 
 void listInit(List** L, size_t data_size, func_ptr free_func);
