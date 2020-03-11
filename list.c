@@ -112,8 +112,8 @@ void listClear(List* L) {
 			iter = iter->next;
 
 			if (L->free_func)
-				L->free_func(iter->data);
-
+				L->free_func(delete_node->data);
+			
 			free(delete_node);
 		} while (iter);
 
