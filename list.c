@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define throwErr(msg) do {			\
-	fprintf(stderr, "%s\n", msg);	\
-	exit(EXIT_FAILURE);				\
+#define throwErr(msg) do { \
+	fprintf(stderr, "%s\n", msg); \
+	exit(EXIT_FAILURE);	\
 } while (0)
 
 void listInit(List** L, size_t data_size, list_func_ptr free_func) {
