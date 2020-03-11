@@ -1,10 +1,18 @@
 #include "list.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void listInit(List** L, size_t data_size, func_ptr free_func) {
+#define throwErr(msg) do {			\
+	fprintf(stderr, "%s\n", msg);	\
+	exit(EXIT_FAILURE);				\
+} while (0)
+
+void listInit(List** L, size_t data_size, list_func_ptr free_func) {
 	(*L) = (List*)malloc(sizeof(List));
+	if ((*L) == NULL)
+		throwErr("Error: out of memory to initialize list!");
 
 	(*L)->head = (*L)->tail = NULL;
 
@@ -14,7 +22,12 @@ void listInit(List** L, size_t data_size, func_ptr free_func) {
 
 void listPushBack(List* L, void* data) {
 	ListNode* new_node = (ListNode*)malloc(sizeof(ListNode));
+	if (new_node == NULL) 
+		throwErr("Error: out of memory to initialize node!");
+
 	new_node->data = malloc(L->data_size);
+	if (new_node->data == NULL)
+		throwErr("Error: out of memory to initialize node data!");
 
 	memcpy(new_node->data, data, L->data_size);
 	new_node->next = new_node->prev = NULL;
@@ -30,6 +43,12 @@ void listPushBack(List* L, void* data) {
 
 void listPushFront(List* L, void* data) {
 	ListNode* new_node = (ListNode*)malloc(sizeof(ListNode));
+	if (new_node == NULL)
+		throwErr("Error: out of memory to initialize node!");
+
+	new_node->data = malloc(L->data_size);
+	if (new_node->data == NULL)
+		throwErr("Error: out of memory to initialize node data!");
 
 	memcpy(new_node->data, data, L->data_size);
 	new_node->next = new_node->prev = NULL;
@@ -78,7 +97,7 @@ void* listFront(const List* L) {
 	return listIsEmpty(L) ? NULL : L->head->data;
 }
 
-void listForEach(List* L, func_ptr proces_func) {
+void listForEach(List* L, list_func_ptr proces_func) {
 	ListNode* iter = L->head;
 
 	do {
@@ -122,8 +141,8 @@ void listClear(List* L) {
 }
 
 void listFree(List** L) {
-	listClear(*L);
-	free(*L);
+	listClear((*L));
+	free((*L));
 
-	*L = NULL;
+	(*L) = NULL;
 }

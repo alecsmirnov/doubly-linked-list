@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-typedef void (*func_ptr)(void*);
+typedef void (*list_func_ptr)(void*);
 
 typedef struct ListNode {
 	void* data;
@@ -19,14 +19,14 @@ typedef struct List {
 
 	size_t data_size;
 
-	func_ptr free_func;
+	list_func_ptr free_func;
 } List;
 
 static inline bool listIsEmpty(const List* L) {
 	return L->head == NULL || L->tail == NULL;
 }
 
-void listInit(List** L, size_t data_size, func_ptr free_func);
+void listInit(List** L, size_t data_size, list_func_ptr free_func);
 
 void listPushBack(List* L, void* data);
 void listPushFront(List* L, void* data);
@@ -37,7 +37,7 @@ void listPopFront(List* L);
 void* listBack(const List* L);
 void* listFront(const List* L);
 
-void listForEach(List* L, func_ptr proces_func);
+void listForEach(List* L, list_func_ptr proces_func);
 
 void listDeleteNode(List* L, ListNode* node);
 

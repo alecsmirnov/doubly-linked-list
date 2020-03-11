@@ -19,22 +19,25 @@ int main(int argc, char *argv[]) {
 	listInit(&int_L, sizeof(int), NULL);
 
 	int value = 3;
-	listPushBack(int_L, (void*)&value);
+	listPushBack(int_L, (void*)&value);			// list: 3
 
 	value = 4;
-	listPushBack(int_L, (void*)&value);
+	listPushBack(int_L, (void*)&value);			// list: 3, 4
 
 	value = 5;
-	listPushBack(int_L, (void*)&value);
+	listPushBack(int_L, (void*)&value);			// list: 3, 4, 5
 
 	printIntList(int_L);
 
+	
+	ListNode* iter = int_L->head;				// iter->data == 3
+	iter = iter->next;							// iter->data == 4
 
-	ListNode* iter = int_L->head;
-	iter = iter->next;
+	listDeleteNode(int_L, iter);				// list: 3, 5
 
-	listDeleteNode(int_L, iter);
 
+	value = 2;
+	listPushFront(int_L, (void*)&value);		// list: 2, 3, 5
 
 	printIntList(int_L);
 
